@@ -2,7 +2,7 @@ import os
 import json
 import requests
 from typing import Dict, Any, List, Optional
-from src.config import GROQ_API_KEY, GEMINI_API_KEY, MISTRAL_API_KEY, OPENROUTER_API_KEY
+from src.config import get_api_key, GROQ_API_KEY, GEMINI_API_KEY, MISTRAL_API_KEY, OPENROUTER_API_KEY
 
 class ScoutCopilotClient:
     """
@@ -10,10 +10,10 @@ class ScoutCopilotClient:
     Groq -> Gemini -> Mistral -> OpenRouter
     """
     def __init__(self):
-        self.groq_key = GROQ_API_KEY
-        self.gemini_key = GEMINI_API_KEY
-        self.mistral_key = MISTRAL_API_KEY
-        self.openrouter_key = OPENROUTER_API_KEY
+        self.groq_key = get_api_key("GROQ_API_KEY") or GROQ_API_KEY
+        self.gemini_key = get_api_key("GEMINI_API_KEY") or GEMINI_API_KEY
+        self.mistral_key = get_api_key("MISTRAL_API_KEY") or MISTRAL_API_KEY
+        self.openrouter_key = get_api_key("OPENROUTER_API_KEY") or OPENROUTER_API_KEY
 
     def _call_groq(self, prompt: str, system_context: str) -> Optional[str]:
         if not self.groq_key or "YOUR_" in self.groq_key:
