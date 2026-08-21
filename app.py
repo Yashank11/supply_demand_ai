@@ -537,7 +537,7 @@ elif nav_selection == "🤖 AI Supply Chain Copilot":
         if st.button("💰 Executive Reorder & Inventory Summary"):
             quick_query = "Summarize total capital locked in inventory, total revenue at risk, and generate a 3-step executive action plan."
 
-    top_risk_skus = inv_health_df[inv_health_df["status"].isin(["CRITICAL_STOCKOUT", "HIGH_RISK"])].head(5).to_dict(orient="records")
+    top_risk_skus = inv_health_df[inv_health_df["status"].isin(["CRITICAL_STOCKOUT", "HIGH_RISK"])].sort_values("days_until_stockout", ascending=True).head(5).to_dict(orient="records")
     top_risk_sups = sup_eval_df.head(4).to_dict(orient="records")
     
     live_ctx = {

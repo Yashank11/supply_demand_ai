@@ -30,7 +30,7 @@ class ScoutCopilotClient:
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1500
+            "max_tokens": 4096
         }
         try:
             resp = requests.post(url, headers=headers, json=payload, timeout=12)
@@ -56,7 +56,7 @@ class ScoutCopilotClient:
             ],
             "generationConfig": {
                 "temperature": 0.3,
-                "maxOutputTokens": 2500
+                "maxOutputTokens": 4096
             }
         }
         try:
@@ -100,7 +100,7 @@ class ScoutCopilotClient:
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1500
+            "max_tokens": 4096
         }
         try:
             resp = requests.post(url, headers=headers, json=payload, timeout=15)
@@ -126,7 +126,7 @@ class ScoutCopilotClient:
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.3,
-            "max_tokens": 1500
+            "max_tokens": 4096
         }
         try:
             resp = requests.post(url, headers=headers, json=payload, timeout=15)
@@ -165,7 +165,8 @@ Instructions for Your Response:
 1. Deliver structured, decisive, and business-focused intelligence.
 2. Quantify risks clearly (SKU IDs, Warehouses, Days to Stockout, Financial impact in ₹ Lakhs/Crores).
 3. Offer actionable 3-step mitigation plans: Immediate (0-24h), Tactical (2-7 days), and Strategic (30+ days).
-4. Maintain a sharp, executive, data-driven tone. Use markdown formatting with bullet points and bold highlights.
+4. When asked for Top SKUs or Risk Summaries, present a clean Markdown Summary Table covering ALL high-risk items so every SKU is included, followed by your action plans.
+5. Ensure your output is completely written from start to finish without truncation or missing sections.
 """
 
         # Provider fallback chain
