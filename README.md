@@ -8,65 +8,37 @@ Instead of building merely a demand forecasting model, SCOUT turns time-series p
 
 ---
 
-## System Architecture
+## 🏛️ System Architecture
 
-`
-+-------------------------------------------------------------------+
-|               MULTI-SOURCE DATA GENERATOR / DWH                   |
-|          (Sales, Weather, Festivals, POs, Shipments)              |
-+-------------------------------------------------------------------+
-                                  |
-         +------------------------+------------------------+
-         |                        |                        |
-         v                        v                        v
-+------------------+     +------------------+     +------------------+
-| DEMAND FORECAST  |     |   INVENTORY AI   |     |   SUPPLIER AI    |
-| - XGBoost        |     | - Safety Stock   |     | - Supplier Risk  |
-| - PyTorch LSTM   |     | - Reorder Point  |     | - OTIF Tracking  |
-| - Prophet Model  |     | - Stockout Risk% |     | - Delay Variance |
-| - P10/P50/P90    |     | - Days to Out    |     | - Bottlenecks    |
-+--------+---------+     +--------+---------+     +--------+---------+
-         |                        |                        |
-         +------------------------+------------------------+
-                                  |
-                                  v
-                   +------------------------------+
-                   |     DECISION ENGINE          |
-                   | - Automated Reorders         |
-                   | - Express Freight Expedite   |
-                   | - Inter-Warehouse Transfers  |
-                   +--------------+---------------+
-                                  |
-         +------------------------+------------------------+
-         v                                                 v
-+----------------------------------+     +----------------------------------+
-|      WHAT-IF SIMULATOR           |     |     AI SUPPLY CHAIN COPILOT      |
-| - Supplier Delay Shocks          |     | - Groq / Gemini / Mistral / OR   |
-| - Demand Surge (+X%)             |     | - RAG Operational Context        |
-| - Financial Loss Quantification  |     | - Executive Action Plans         |
-+----------------+-----------------+     +----------------+-----------------+
-                 |                                        |
-                 +-------------------+--------------------+
-                                     |
-                                     v
-+-------------------------------------------------------------------+
-|               STREAMLIT EXECUTIVE COMMAND CENTER                  |
-|          (Interactive Dashboards, Risk Heatmap, MLOps)            |
-+-------------------------------------------------------------------+
-`
+- **Layer 1: Multi-Source Data Warehouse**
+  - Synthesizes 250,000+ daily observations (Sales, Weather, Festivals, POs, Shipments).
+  - Integrates 35 SKUs across 10 hubs and 12 strategic suppliers.
+  ↓
+- **Layer 2: Analytics & ML Engines**
+  - **Demand Forecasting**: XGBoost Regressor, PyTorch LSTM Seq2Seq, Seasonal Prophet, P10/P50/P90 Quantiles.
+  - **Inventory Intelligence**: Dynamic Safety Stock, Reorder Point (ROP), Days of Inventory (DOI), Stockout Probability %.
+  - **Supplier Intelligence**: Composite Risk Scoring (0-100), OTIF tracking, Delay Probability %, Bottleneck Analytics.
+  ↓
+- **Layer 3: Decision Intelligence & Copilot**
+  - **Decision Engine**: Automated PO Reorder Quantities, Express Freight Expediting, Inter-Warehouse Transfers.
+  - **What-If Simulator**: Live parameter stress-testing for Supplier Delay Shocks, Demand Surges (+X%), and Revenue Loss (INR).
+  - **AI Supply Chain Copilot**: Multi-LLM RAG Client (Groq • Gemini • Mistral • OpenRouter).
+  ↓
+- **Layer 4: Executive Interface**
+  - **Streamlit Dashboard**: 7 Interactive Command Center views, Risk Heatmaps, MLOps Data Drift Monitoring.
 
 ---
 
-## Multi-Source Supply Chain Data Architecture
+## 📦 Multi-Source Supply Chain Data Architecture
 
 SCOUT generates a rich, multi-echelon supply chain data warehouse combining real retail sales series with operational logistics variables:
 
 1. **Product Hierarchy (35 SKUs across 5 Categories)**:
-   - *FMCG* (Beverages, Packaged Food, Personal Care, Detergents)
-   - *Electronics* (Smartphones, Smart Wearables, Audio Accessories, Home Appliances)
-   - *Groceries & Perishables* (Edible Oil, Basmati Rice, Dairy Essentials, Spices)
-   - *Pharmaceuticals* (Essential Antibiotics, Cold & Flu Relief, Cardio Care, Multivitamins)
-   - *Industrial* (Automotive Lubricants, Fasteners, Safety Gear, Packaging)
+   - *FMCG*: Beverages, Packaged Food, Personal Care, Detergents
+   - *Electronics*: Smartphones, Smart Wearables, Audio Accessories, Home Appliances
+   - *Groceries & Perishables*: Edible Oil, Basmati Rice, Dairy Essentials, Spices
+   - *Pharmaceuticals*: Essential Antibiotics, Cold & Flu Relief, Cardio Care, Multivitamins
+   - *Industrial*: Automotive Lubricants, Fasteners, Safety Gear, Packaging
    - Attributes: SKU ID, unit cost (INR), selling price (INR), margin (18% - 45%), shelf life (days), holding cost rate (18% - 26%/year), and base daily demand.
 
 2. **Multi-Echelon Network (10 Primary Indian Hubs)**:
@@ -83,7 +55,7 @@ SCOUT generates a rich, multi-echelon supply chain data warehouse combining real
 
 ---
 
-## The 5 Intelligence Layers
+## ⚡ The 5 Intelligence Layers
 
 ### Layer 1 — Probabilistic Demand Forecasting
 - **Moving Average Baseline**: 7-day and 14-day rolling mean + exponential smoothing.
@@ -129,7 +101,7 @@ olling_mean_30, price discount %, festival multipliers, weather regressors).
 
 ---
 
-## Streamlit Dashboard Guide (7 Views)
+## 📊 Streamlit Dashboard Guide (7 Views)
 
 1. **Executive Command Center**: High-level KPIs (*Network Health Score*, *Stockout Risk SKUs*, *Revenue at Risk*, *Capital Locked*), Multi-Warehouse Stockout Heatmap, Inventory Health Donut, and AI Recommended Action Cards.
 2. **Demand Forecasting Studio**: SKU & Warehouse pickers, horizon slider (7-30 days), model selector (XGBoost, LSTM, Seasonal, Moving Avg), P10/P50/P90 confidence plot, and XGBoost feature importance breakdown.
@@ -141,7 +113,7 @@ olling_mean_30, price discount %, festival multipliers, weather regressors).
 
 ---
 
-## Model Performance Benchmark Results
+## 🏆 Model Performance Benchmark Results
 
 Evaluated on historical hold-out validation dataset (28 days):
 
@@ -154,7 +126,7 @@ Evaluated on historical hold-out validation dataset (28 days):
 
 ---
 
-## Quick Start & Installation
+## 🚀 Quick Start & Installation
 
 ### 1. Prerequisites
 - Python 3.10+
@@ -183,39 +155,29 @@ python -m pytest tests/test_scout.py
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
-`
-supply_demand_ai/
-├── app.py                      # Main Streamlit Executive Dashboard
-├── README.md                   # System Documentation
-├── requirements.txt            # Python Dependencies
-├── .env.example                # API Key Configuration Template
-├── .gitignore                  # Clean exclusion of __pycache__ and cache artifacts
-├── src/
-│   ├── config.py               # Application & Simulation Constants
-│   ├── data/
-│   │   └── generator.py        # Multi-Echelon Data Warehouse Generator & Cache
-│   ├── forecasting/
-│   │   ├── models.py           # Moving Avg, Seasonal, XGBoost & PyTorch LSTM
-│   │   └── evaluator.py        # Model Evaluator & WAPE/Business Cost Metrics
-│   ├── inventory/
-│   │   └── risk_engine.py      # Dynamic Safety Stock, ROP & Stockout Probability
-│   ├── suppliers/
-│   │   └── supplier_engine.py  # Supplier Risk Scorecards & Delay Propagation
-│   ├── decision/
-│   │   ├── recommender.py      # Actionable Priority Recommendations Engine
-│   │   └── simulator.py        # What-If Scenario Stress Testing Simulator
-│   ├── copilot/
-│   │   └── llm_client.py       # Multi-Provider LLM Copilot (Groq/Gemini/Mistral)
-│   └── ui/
-│       ├── styles.py           # Custom Glassmorphic Dark Executive CSS
-│       └── components.py       # Plotly Interactive Charts & Heatmaps
-└── tests/
-    └── test_scout.py           # Pytest Test Suite
-`
+- **pp.py**: Main Streamlit Executive Dashboard
+- **README.md**: System Documentation
+- **
+equirements.txt**: Python Dependencies
+- **.env.example**: API Key Configuration Template
+- **.gitignore**: Clean exclusion of cache artifacts
+- **src/**: Core Source Modules
+  - **config.py**: Application & Simulation Constants
+  - **data/generator.py**: Multi-Echelon Data Warehouse Generator & Cache
+  - **orecasting/models.py**: Moving Avg, Seasonal, XGBoost & PyTorch LSTM
+  - **orecasting/evaluator.py**: Model Evaluator & WAPE/Business Cost Metrics
+  - **inventory/risk_engine.py**: Dynamic Safety Stock, ROP & Stockout Probability
+  - **suppliers/supplier_engine.py**: Supplier Risk Scorecards & Delay Propagation
+  - **decision/recommender.py**: Actionable Priority Recommendations Engine
+  - **decision/simulator.py**: What-If Scenario Stress Testing Simulator
+  - **copilot/llm_client.py**: Multi-Provider LLM Copilot (Groq/Gemini/Mistral)
+  - **ui/styles.py**: Custom Glassmorphic Dark Executive CSS
+  - **ui/components.py**: Plotly Interactive Charts & Heatmaps
+- **	ests/test_scout.py**: Pytest Test Suite
 
 ---
 
-## License
+## 📄 License
 Distributed under the MIT License.
